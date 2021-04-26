@@ -7,27 +7,66 @@
       <input type="text" class="search" placeholder="Search your favourate anime here">
     </div>
     <div class="container">
-        <div class="grid">
-          <List v-for="anime in animes" :key="anime.hrf" :title="anime.title" :href="anime.href" :img="anime.img"/>
+        <div class="main">
+          <div class="grid">
+            <List v-for="anime in animes" :key="anime.hrf" :title="anime.title" :href="anime.href" :img="anime.img"/>
+          </div>
+          <div class="ongoinglist">
+            <OngoingList v-for="ongoing in ongoingAnime" :key="ongoing.index" :herf="ongoing.cover" :title="ongoing.title" :img="ongoing.img"/>
+          </div>
         </div>
         <div class="right-nav">
           <Ongoing/>
         </div>
+         
     </div>
+    
   </div>
 </template>
 
 <script>
 import Navbar from '../components/Navbar.vue'
 import Ongoing from '../components/Ongoing.vue'
+import OngoingList from '../components/OngoingList.vue'
 export default {
   components: { Navbar, Ongoing },
 
   data() {
         return {
-            animes : [{"title": "Tensura Nikki: Tensei shitara Slime Datta Ken", "href": "http://www.anime1.com/watch/tensura-nikki-tensei-shitara-slime-datta-ken", "img": "http://www.anime1.com/main/img/content/tensura-nikki-tensei-shitara-slime-datta-ken/tensura-nikki-tensei-shitara-slime-datta-ken-210.jpg"}, {"title": "Seijo no Maryoku wa Bannou Desu", "href": "http://www.anime1.com/watch/seijo-no-maryoku-wa-bannou-desu", "img": "http://www.anime1.com/main/img/content/seijo-no-maryoku-wa-bannou-desu/seijo-no-maryoku-wa-bannou-desu-210.jpg"},{"title": "Tensura Nikki: Tensei shitara Slime Datta Ken", "href": "http://www.anime1.com/watch/tensura-nikki-tensei-shitara-slime-datta-ken", "img": "http://www.anime1.com/main/img/content/tensura-nikki-tensei-shitara-slime-datta-ken/tensura-nikki-tensei-shitara-slime-datta-ken-210.jpg"}, {"title": "Seijo no Maryoku wa Bannou Desu", "href": "http://www.anime1.com/watch/seijo-no-maryoku-wa-bannou-desu", "img": "http://www.anime1.com/main/img/content/seijo-no-maryoku-wa-bannou-desu/seijo-no-maryoku-wa-bannou-desu-210.jpg"}, {"title": "Boku no Hero Academia 4th Season", "href": "http://www.anime1.com/watch/boku-no-hero-academia-4th-season", "img": "http://www.anime1.com/main/img/content/boku-no-hero-academia-4th-season/boku-no-hero-academia-4th-season-210.jpg"}]
+            animes : [{"title": "Tensura Nikki: Tensei shitara Slime Datta Ken", "href": "http://www.anime1.com/watch/tensura-nikki-tensei-shitara-slime-datta-ken", "img": "http://www.anime1.com/main/img/content/tensura-nikki-tensei-shitara-slime-datta-ken/tensura-nikki-tensei-shitara-slime-datta-ken-210.jpg"}, {"title": "Seijo no Maryoku wa Bannou Desu", "href": "http://www.anime1.com/watch/seijo-no-maryoku-wa-bannou-desu", "img": "http://www.anime1.com/main/img/content/seijo-no-maryoku-wa-bannou-desu/seijo-no-maryoku-wa-bannou-desu-210.jpg"},{"title": "Tensura Nikki: Tensei shitara Slime Datta Ken", "href": "http://www.anime1.com/watch/tensura-nikki-tensei-shitara-slime-datta-ken", "img": "http://www.anime1.com/main/img/content/tensura-nikki-tensei-shitara-slime-datta-ken/tensura-nikki-tensei-shitara-slime-datta-ken-210.jpg"}, {"title": "Seijo no Maryoku wa Bannou Desu", "href": "http://www.anime1.com/watch/seijo-no-maryoku-wa-bannou-desu", "img": "http://www.anime1.com/main/img/content/seijo-no-maryoku-wa-bannou-desu/seijo-no-maryoku-wa-bannou-desu-210.jpg"}, {"title": "Boku no Hero Academia 4th Season", "href": "http://www.anime1.com/watch/boku-no-hero-academia-4th-season", "img": "http://www.anime1.com/main/img/content/boku-no-hero-academia-4th-season/boku-no-hero-academia-4th-season-210.jpg"}],
+            ongoingAnime : []
         }
 
+    },
+    mounted() {
+      var self = this;
+      function loadDataJSON(){
+        let arr = []
+        let jsondata;
+        // var self = this;
+        fetch('/datas.json').then(data=>{
+          return data.json()
+        }).then(res=>{
+          let animelist = res;
+          jsondata = animelist;
+          for(let anime in animelist){
+              arr.push(anime)
+          }
+          for(let i =0; i< 12; i++){
+            let title = arr[i]
+            let data = JSON.parse(jsondata[title])
+            let anime = { };
+            anime['title'] = title;
+            anime['img'] = data[title].cover
+            // self.ongoingAnime[title] = data[title];
+            self.ongoingAnime.push(anime)
+          }
+          console.log(self.ongoingAnime)
+        }).catch(e=>{
+          console.log(e)
+        })
+      }
+      loadDataJSON()
     },
   head: {
     title: 'Welcome to the Anime Channel to find your Fav animes',
@@ -44,6 +83,11 @@ export default {
 </script>
 
 <style>
+
+.main{
+  width: 800px;
+  flex: 1 auto;
+}
 .input{
    margin-left: 320px;
     display: flex;
@@ -96,12 +140,23 @@ header{
   width: 800px;
   flex: 1 auto;
 }
+
+.ongoinglist{
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr;
+  column-gap: 5px;
+  justify-content: start;
+  width: 800px;
+  /* flex: 1 auto; */
+}
 .container {
-  min-height: 100vh;
+  height: 100vh !important;
   display: flex;
   margin-left: 305px;
 }
-
+.right-nav{
+  margin-right: 25px;
+}
 .title {
   font-family:
     'Quicksand',

@@ -157,7 +157,7 @@ background:#1b1d26;
 position:absolute;
 top:0;
 bottom:0;
-height:100%;
+height:100%; 
 left:0;
 width:300px;
 overflow:hidden;

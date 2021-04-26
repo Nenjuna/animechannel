@@ -12,8 +12,7 @@ html {
   box-sizing: border-box;
   /* background-color: #1d202b; */
   background: rgb(49,50,56);
-background: linear-gradient(170deg, rgba(49,50,56,1) 0%, rgba(29,31,42,1) 48%, rgba(21,23,25,1) 100%);
-  height: 100%;
+  background: linear-gradient(170deg, rgba(49,50,56,1) 0%, rgba(29,31,42,1) 48%, rgba(21,23,25,1) 100%);
 }
 textarea:focus, input:focus{
     outline: none;
