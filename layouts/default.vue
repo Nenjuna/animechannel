@@ -6,13 +6,14 @@
 
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Montserrat&display=swap');
-html {
+html, body {
   font-family: 'Montserrat', sans-serif;
   font-size: 16px;
   box-sizing: border-box;
   /* background-color: #1d202b; */
   background: rgb(49,50,56);
   background: linear-gradient(170deg, rgba(49,50,56,1) 0%, rgba(29,31,42,1) 48%, rgba(21,23,25,1) 100%);
+  height: auto !important;
 }
 textarea:focus, input:focus{
     outline: none;

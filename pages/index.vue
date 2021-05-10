@@ -8,11 +8,13 @@
     </div>
     <div class="container">
         <div class="main">
+          <h1>Featured</h1>
           <div class="grid">
-            <List v-for="anime in animes" :key="anime.hrf" :title="anime.title" :href="anime.href" :img="anime.img"/>
+            <List v-for="anime in animes" :key="anime.id" :title="anime.title" :href="anime.href" :img="anime.img"/>
           </div>
+          <h1>Ongoing Anime</h1>
           <div class="ongoinglist">
-            <OngoingList v-for="ongoing in ongoingAnime" :key="ongoing.index" :herf="ongoing.cover" :title="ongoing.title" :img="ongoing.img"/>
+            <OngoingList v-for="ongoing in ongoingAnime" :key="ongoing.index" :herf="ongoing.img" :title="ongoing.title" :img="ongoing.img" :status="ongoing.status"/>
           </div>
         </div>
         <div class="right-nav">
@@ -55,13 +57,16 @@ export default {
           for(let i =0; i< 12; i++){
             let title = arr[i]
             let data = JSON.parse(jsondata[title])
+            // console.log(data)
             let anime = { };
             anime['title'] = title;
             anime['img'] = data[title].cover
+            anime['status'] = data[title]['meta'].status
+            console.log(anime)
             // self.ongoingAnime[title] = data[title];
             self.ongoingAnime.push(anime)
           }
-          console.log(self.ongoingAnime)
+          // console.log(self.ongoingAnime)
         }).catch(e=>{
           console.log(e)
         })
@@ -83,6 +88,14 @@ export default {
 </script>
 
 <style>
+
+h1{
+  color: #f1f1f1;
+ margin: 15px;
+  font-size: 1.1rem;
+  text-transform: uppercase;
+  font-weight: bolder;
+}
 
 .main{
   width: 800px;

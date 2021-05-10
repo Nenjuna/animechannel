@@ -1,17 +1,17 @@
 <template>
     <div>
         <div class="item">
-            <a :href="href" class="nli-image"><img :alt="title" :src="img"></a>
+            <a :href="img" class="nli-image"><img :alt="title" :src="img"></a>
         </div>
         <div class="li-right">
 		    	<div class="tit"><a :href="href">{{title}}</a></div>
-                <div class="li-date">Today - Ongoing</div>
+                <div class="li-date">{{status}}</div>
         </div>
     </div>
 </template>
 <script>
 export default {
-    props: ["title","href","img"],
+    props: ["title","href","img", "status"],
 }
 </script>
 <style scoped>
