@@ -16,6 +16,10 @@ export default {
     ]
   },
 
+  serverMiddleware: [{
+    path: '/api', handler: '~/api/index.js'
+  }],
+
   // Global CSS: https://go.nuxtjs.dev/config-css
   css: [
      '~/assets/css/main.scss',  '~/assets/css/main.css'
@@ -34,6 +38,7 @@ export default {
 
   // Modules: https://go.nuxtjs.dev/config-modules
   modules: [
+    '@nuxtjs/axios'
   ],
 
   // Build Configuration: https://go.nuxtjs.dev/config-build

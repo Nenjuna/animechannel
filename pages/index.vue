@@ -10,7 +10,7 @@
         <div class="main">
           <h1>Featured</h1>
           <div class="grid">
-            <List v-for="anime in animes" :key="anime.id" :title="anime.title" :href="anime.href" :img="anime.img"/>
+            <List v-for="anime in animes" :key="anime._id" :title="anime.name" :href="anime._id" :img="anime.cover"/>
           </div>
           <h1>Ongoing Anime</h1>
           <div class="ongoinglist">
@@ -35,13 +35,37 @@ export default {
 
   data() {
         return {
-            animes : [{"title": "Tensura Nikki: Tensei shitara Slime Datta Ken", "href": "http://www.anime1.com/watch/tensura-nikki-tensei-shitara-slime-datta-ken", "img": "http://www.anime1.com/main/img/content/tensura-nikki-tensei-shitara-slime-datta-ken/tensura-nikki-tensei-shitara-slime-datta-ken-210.jpg"}, {"title": "Seijo no Maryoku wa Bannou Desu", "href": "http://www.anime1.com/watch/seijo-no-maryoku-wa-bannou-desu", "img": "http://www.anime1.com/main/img/content/seijo-no-maryoku-wa-bannou-desu/seijo-no-maryoku-wa-bannou-desu-210.jpg"},{"title": "Tensura Nikki: Tensei shitara Slime Datta Ken", "href": "http://www.anime1.com/watch/tensura-nikki-tensei-shitara-slime-datta-ken", "img": "http://www.anime1.com/main/img/content/tensura-nikki-tensei-shitara-slime-datta-ken/tensura-nikki-tensei-shitara-slime-datta-ken-210.jpg"}, {"title": "Seijo no Maryoku wa Bannou Desu", "href": "http://www.anime1.com/watch/seijo-no-maryoku-wa-bannou-desu", "img": "http://www.anime1.com/main/img/content/seijo-no-maryoku-wa-bannou-desu/seijo-no-maryoku-wa-bannou-desu-210.jpg"}, {"title": "Boku no Hero Academia 4th Season", "href": "http://www.anime1.com/watch/boku-no-hero-academia-4th-season", "img": "http://www.anime1.com/main/img/content/boku-no-hero-academia-4th-season/boku-no-hero-academia-4th-season-210.jpg"}],
+            animes : [],
             ongoingAnime : []
         }
 
     },
+    // async asyncData({$axios}) {
+    //   let animes = []
+    //   let self = this
+    //   const data = await $axios.get(`https://animefreak-api.herokuapp.com/animeeps`)
+    //   // const data = await $axios.$get
+    //   for(let i=0;i<5;i++){
+    //     let anime = data[i];
+    //     animes.push(anime)
+    //     }
+    //     return animes;
+    // },
     mounted() {
       var self = this;
+      function loadFeatured(){
+        fetch(`https://animefreak-api.herokuapp.com/ongoing`).then(data=>{
+          return data.json()
+        }).then(res=>{
+          for(let i=0;i<5;i++){
+        let anime = res[i];
+        self.animes.push(anime)
+        }
+        }).catch(e=>{
+          console.log(e)}
+          )
+      }
+      loadFeatured()
       function loadDataJSON(){
         let arr = []
         let jsondata;
@@ -62,7 +86,7 @@ export default {
             anime['title'] = title;
             anime['img'] = data[title].cover
             anime['status'] = data[title]['meta'].status
-            console.log(anime)
+            // console.log(anime)
             // self.ongoingAnime[title] = data[title];
             self.ongoingAnime.push(anime)
           }
