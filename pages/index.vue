@@ -31,6 +31,7 @@ import Navbar from '../components/Navbar.vue'
 import Ongoing from '../components/Ongoing.vue'
 import OngoingList from '../components/OngoingList.vue'
 export default {
+
   components: { Navbar, Ongoing },
 
   data() {
@@ -40,32 +41,19 @@ export default {
         }
 
     },
-    // async asyncData({$axios}) {
-    //   let animes = []
-    //   let self = this
-    //   const data = await $axios.get(`https://animefreak-api.herokuapp.com/animeeps`)
-    //   // const data = await $axios.$get
-    //   for(let i=0;i<5;i++){
-    //     let anime = data[i];
-    //     animes.push(anime)
-    //     }
-    //     return animes;
-    // },
+     async asyncData({$axios}) {
+        let animes = []
+        const animation = await $axios.$get("https://animefreak-api.herokuapp.com/ongoing")
+        // console.log(animation)
+        for(let i=0;i<5;i++){
+            let anime = animation[i];
+            animes.push(anime)
+            }
+            return {animes}
+  },
+
     mounted() {
       var self = this;
-      function loadFeatured(){
-        fetch(`https://animefreak-api.herokuapp.com/ongoing`).then(data=>{
-          return data.json()
-        }).then(res=>{
-          for(let i=0;i<5;i++){
-        let anime = res[i];
-        self.animes.push(anime)
-        }
-        }).catch(e=>{
-          console.log(e)}
-          )
-      }
-      loadFeatured()
       function loadDataJSON(){
         let arr = []
         let jsondata;
