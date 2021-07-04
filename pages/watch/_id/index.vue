@@ -43,53 +43,53 @@ export default {
       const data = await $$axios.$get(`https://animefreak-api.herokuapp.com/animeeps`)
       
     },
-    // mounted() {
-    //   var self = this;
-    //   function loadDataJSON(){
-    //     let animes = []
-    //     let arr = []
-    //     let jsondata;
-    //     fetch('/datas.json').then(data=>{
-    //       return data.json()
-    //     }).then(res=>{
-    //       let animelist = res;
-    //       jsondata = animelist;
-    //       let animename = self.$route.params.id;
+    mounted() {
+      var self = this;
+      function loadDataJSON(){
+        let animes = []
+        let arr = []
+        let jsondata;
+        fetch('/datas.json').then(data=>{
+          return data.json()
+        }).then(res=>{
+          let animelist = res;
+          jsondata = animelist;
+          let animename = self.$route.params.id;
 
-    //       for(let anime in animelist){
-    //           arr.push(anime)
-    //       }
-    //       for(let i =0; i< arr.length; i++){
-    //         let title = arr[i]
-    //         let data = JSON.parse(jsondata[title])
-    //         let anime = { };
-    //         anime['title'] = title;
-    //         anime['img'] = data[title].cover
-    //         anime['meta'] = data[title]['meta']
-    //         animes.push(anime)
-    //       }
-    //       let index = animes.findIndex(anime=> anime.title.toLowerCase().replaceAll(' ', '_')==animename.replace('_episodes',""))
-    //       self.anime = animes[index]
-    //       console.log(self.anime)
+          for(let anime in animelist){
+              arr.push(anime)
+          }
+          for(let i =0; i< arr.length; i++){
+            let title = arr[i]
+            let data = JSON.parse(jsondata[title])
+            let anime = { };
+            anime['title'] = title;
+            anime['img'] = data[title].cover
+            anime['meta'] = data[title]['meta']
+            animes.push(anime)
+          }
+          let index = animes.findIndex(anime=> anime.title.toLowerCase().replaceAll(' ', '_')==animename.replace('_episodes',""))
+          self.anime = animes[index]
+          console.log(self.anime)
 
-    //     }).catch(e=>{
-    //       console.log(e)
-    //     })
-    //   }
-    //   loadDataJSON()
-    //   function loadEpisodes(){
-    //       fetch('/datas-copy.json').then(data=>{
-    //           return data.json()
-    //       }).then(res=>{
-    //           if(res[self.$route.params.id]){
-    //               self.episodes = res[self.$route.params.id];
-    //               console.log(self.episodes.length)
-    //           }
-    //       }).catch(e=>
-    //       console.log(e))
-    //   }
-    //   loadEpisodes()
-    // },
+        }).catch(e=>{
+          console.log(e)
+        })
+      }
+      loadDataJSON()
+      function loadEpisodes(){
+          fetch('/datas-copy.json').then(data=>{
+              return data.json()
+          }).then(res=>{
+              if(res[self.$route.params.id]){
+                  self.episodes = res[self.$route.params.id];
+                  console.log(self.episodes.length)
+              }
+          }).catch(e=>
+          console.log(e))
+      }
+      loadEpisodes()
+    },
     
 }
 </script>

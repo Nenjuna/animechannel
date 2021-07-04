@@ -47,9 +47,10 @@ export default {
         // console.log(animation)
         for(let i=0;i<5;i++){
             let anime = animation[i];
+            anime.cover = anime.cover.replace('http','https')
             animes.push(anime)
             }
-            return {animes}
+            return { animes }
   },
 
     mounted() {
